@@ -37,7 +37,13 @@ class LockedInTaskTracker(Tk):
         header = Frame(self, bg="#121212")
         header.pack(fill="x", padx=20, pady=(20, 10))
 
-        Label(header, text="Locked-In Task Tracker", style="Header.TLabel").pack(anchor="w")
+        Label(
+            header,
+            text="Locked-In Task Tracker",
+            font=("Helvetica", 18, "bold"),
+            bg="#121212",
+            fg="#ffffff",
+        ).pack(anchor="w")
         Label(
             header,
             text="Stay focused, celebrate progress, and keep every task within reach.",
@@ -66,11 +72,11 @@ class LockedInTaskTracker(Tk):
         content = Frame(self, bg="#121212")
         content.pack(fill="both", expand=True, padx=20)
 
-        form_card = Frame(content, style="Card.TFrame", bd=0)
+        form_card = Frame(content, bd=0)
         form_card.pack(side="left", fill="y", padx=(0, 12), pady=4)
         form_card.configure(padx=16, pady=16)
 
-        Label(form_card, text="Add a new task", style="CardHeading.TLabel").pack(anchor="w", pady=(0, 12))
+        Label(form_card, text="Add a new task", font=("Helvetica", 14, "bold"), fg="#ffffff").pack(anchor="w", pady=(0, 12))
 
         self.build_form_row(form_card, "Task", self.task_title_var)
         self.build_form_row(form_card, "Note", self.task_note_var)
@@ -101,7 +107,7 @@ class LockedInTaskTracker(Tk):
         status_frame.pack(fill="x", pady=(0, 12))
         status_frame.configure(padx=16, pady=16)
 
-        Label(status_frame, text="Today’s progress", style="CardHeading.TLabel").pack(anchor="w")
+        Label(status_frame, text="Today's progress", font=("Helvetica", 14, "bold"), fg="#ffffff").pack(anchor="w")
         self.progress_text = Label(status_frame, text="0 of 0 tasks completed", bg="#1f1f1f", fg="#d0d0d0", font=("Helvetica", 11))
         self.progress_text.pack(anchor="w", pady=(8, 10))
 
@@ -123,7 +129,7 @@ class LockedInTaskTracker(Tk):
         list_frame = Frame(parent, bg="#121212")
         list_frame.pack(fill="both", expand=True)
 
-        Label(list_frame, text="Your tasks", style="CardHeading.TLabel").pack(anchor="w", pady=(0, 10))
+        Label(list_frame, text="Your tasks", font=("Helvetica", 14, "bold"), fg="#ffffff").pack(anchor="w", pady=(0, 10))
 
         canvas = Canvas(list_frame, bg="#121212", highlightthickness=0)
         canvas.pack(side="left", fill="both", expand=True)
@@ -182,7 +188,7 @@ class LockedInTaskTracker(Tk):
         self.update_summary()
 
     def build_task_card(self, task):
-        card = Frame(self.task_list_container, style="Card.TFrame", bd=0)
+        card = Frame(self.task_list_container, bd=0)
         card.configure(padx=14, pady=12)
         card.pack(fill="x", pady=(0, 12))
 
@@ -195,7 +201,7 @@ class LockedInTaskTracker(Tk):
         Label(
             top_row,
             text=task["title"],
-            style="CardHeading.TLabel",
+            font=("Helvetica", 14, "bold"),
             bg=card.cget("background"),
         ).pack(side="left", anchor="w")
 
