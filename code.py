@@ -28,6 +28,8 @@ class LockedInTaskTracker(Tk):
         self.style.configure("CardHeading.TLabel", font=("Helvetica", 13, "bold"))
         self.style.configure("Accent.TLabel", foreground="#72d6ff")
         self.style.configure("TEntry", fieldbackground="#222222", foreground="#ffffff")
+        self.style.configure("Horizontal.TProgressbar", background="#72d6ff")
+        self.style.configure("Green.Horizontal.TProgressbar", background="#8bc34a")
 
         self.build_ui()
         self.load_tasks()
@@ -111,7 +113,7 @@ class LockedInTaskTracker(Tk):
         self.progress_text = Label(status_frame, text="0 of 0 tasks completed", bg="#1f1f1f", fg="#d0d0d0", font=("Helvetica", 11))
         self.progress_text.pack(anchor="w", pady=(8, 10))
 
-        self.progress_bar = ttk.Progressbar(status_frame, orient=HORIZONTAL, mode="determinate", length=320)
+        self.progress_bar = ttk.Progressbar(status_frame, orient=HORIZONTAL, mode="determinate", length=320, style="Horizontal.TProgressbar")
         self.progress_bar.pack(fill="x")
 
         self.motivation_label = Label(
@@ -214,13 +216,28 @@ class LockedInTaskTracker(Tk):
             font=("Helvetica", 11, "bold"),
         ).pack(side="right")
 
+        priority_colors = {
+            "High": "#b71c1c",    # dark red
+            "Medium": "#ff9800",  # orange
+            "Low": "#ffeb3b",     # yellow
+        }
+        priority_color = priority_colors.get(task["priority"], "#d0d0d0")
+
         Label(
             card,
-            text=f"Category: {task['category']}   •   Priority: {task['priority']}",
+            text=f"Category: {task['category']}   •   ",
             bg=card.cget("background"),
             fg="#d0d0d0",
             font=("Helvetica", 10),
-        ).pack(anchor="w", pady=(6, 0))
+        ).pack(side="left", anchor="w")
+
+        Label(
+            card,
+            text=task["priority"],
+            bg=card.cget("background"),
+            fg=priority_color,
+            font=("Helvetica", 10, "bold"),
+        ).pack(side="left", anchor="w")
 
         if task["note"]:
             Label(
@@ -280,10 +297,12 @@ class LockedInTaskTracker(Tk):
 
         if completed == total and total > 0:
             self.motivation_label.config(text="Excellent work! Your Locked-In streak is real today.")
+            self.progress_bar.configure(style="Green.Horizontal.TProgressbar")
         elif total == 0:
             self.motivation_label.config(text="Add a task to begin a smoother, more structured day.")
         else:
             self.motivation_label.config(text="Keep going — focus on one task at a time and celebrate the progress.")
+            self.progress_bar.configure(style="Horizontal.TProgressbar")
 
     def load_tasks(self):
         if os.path.exists(TASK_FILE):
