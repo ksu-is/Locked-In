@@ -13,13 +13,13 @@
 
 
 # Sprint 2
-- [X] Create an engaging UI utilizing AI that featured the basic programming of [     ]'s interface (Ky Garrett-Townsend)
+- [X] Create an engaging UI utilizing AI that featured the basic programming of [https://github.com/ksu-is/Locked-In-]'s interface (Ky Garrett-Townsend)
 
 - [X] Customize UI Colors, Title Text, etc, to promote better engagement (Ky Garrett-Townsend)
 
 - [ ] Experiment w/ adding multiple variations of motivational quotes/positive affirmations (Ky Garrett-Townsend)
 
-- [ ] Try adding an "achievement" to be earned after documenting and completing "x" amount of tasks (Ky Garrett-Townsend)
+- [X] Try adding an "achievement" to be earned after documenting and completing "x" amount of tasks (Ky Garrett-Townsend)
 
 - [ ] Work on a reminder system (Ky Garrett-Townsend)
 
