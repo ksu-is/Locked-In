@@ -18,6 +18,7 @@ class LockedInTaskTracker(Tk):
         self.task_title_var = StringVar()
         self.task_note_var = StringVar()
         self.completed_count = IntVar(value=0)
+        self.achievements = []  # Track unlocked achievements
 
         self.style = ttk.Style(self)
         self.style.theme_use("clam")
@@ -30,6 +31,7 @@ class LockedInTaskTracker(Tk):
         self.style.configure("TEntry", fieldbackground="#222222", foreground="#ffffff")
         self.style.configure("Horizontal.TProgressbar", background="#72d6ff")
         self.style.configure("Green.Horizontal.TProgressbar", background="#8bc34a")
+        self.style.configure("Achievement.TLabel", foreground="#ffd700", font=("Helvetica", 11, "bold"))
 
         self.build_ui()
         self.load_tasks()
@@ -270,7 +272,11 @@ class LockedInTaskTracker(Tk):
     def toggle_completion(self, task_id):
         for task in self.tasks:
             if task["id"] == task_id:
+                was_done = task["done"]
                 task["done"] = not task["done"]
+                # Check for achievements on completion (not on uncomplete)
+                if not was_done and not task["done"]:
+                    self.check_achievements()
                 break
         self.save_tasks()
         self.refresh_tasks()
@@ -303,6 +309,62 @@ class LockedInTaskTracker(Tk):
         else:
             self.motivation_label.config(text="Keep going — focus on one task at a time and celebrate the progress.")
             self.progress_bar.configure(style="Horizontal.TProgressbar")
+
+    def check_achievements(self):
+        """Check and unlock achievements based on task progress."""
+        completed = sum(1 for task in self.tasks if task["done"])
+        
+        # Achievement: The Beginning - Complete your first task
+        if completed == 1 and "the_beginning" not in self.achievements:
+            self.achievements.append("the_beginning")
+            self.show_achievement_popup("The Beginning", "Completed your first task!")
+
+    def show_achievement_popup(self, title, description):
+        """Display a small achievement popup notification."""
+        popup = Toplevel(self)
+        popup.title("")
+        popup.geometry("320x120")
+        popup.configure(bg="#1f1f1f")
+        popup.overrideredirect(True)
+        
+        # Position in bottom-right corner
+        popup.geometry(f"+{self.winfo_x() + self.winfo_width() - 340}+{self.winfo_y() + self.winfo_height() - 140}")
+        
+        # Main container
+        container = Frame(popup, bg="#1f1f1f", bd=0)
+        container.pack(fill="both", expand=True, padx=16, pady=16)
+        
+        # Achievement icon (star emoji representation)
+        icon_label = Label(
+            container,
+            text="⭐",
+            font=("Helvetica", 28),
+            bg="#1f1f1f",
+        )
+        icon_label.pack(side="left", padx=(0, 12))
+        
+        # Text content
+        text_frame = Frame(container, bg="#1f1f1f")
+        text_frame.pack(side="left", fill="both", expand=True)
+        
+        Label(
+            text_frame,
+            text=title,
+            font=("Helvetica", 14, "bold"),
+            bg="#1f1f1f",
+            fg="#ffd700",
+        ).pack(anchor="w")
+        
+        Label(
+            text_frame,
+            text=description,
+            font=("Helvetica", 11),
+            bg="#1f1f1f",
+            fg="#cccccc",
+        ).pack(anchor="w", pady=(4, 0))
+        
+        # Auto-close after 3 seconds
+        popup.after(3000, popup.destroy)
 
     def load_tasks(self):
         if os.path.exists(TASK_FILE):
