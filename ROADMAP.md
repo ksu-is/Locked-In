@@ -15,7 +15,7 @@
 # Sprint 2
 - [X] Create an engaging UI utilizing AI that featured the basic programming of [     ]'s interface (Ky Garrett-Townsend)
 
-- [ ] Customize UI Colors, Title Text, etc, to promote better engagement (Ky Garrett-Townsend)
+- [X] Customize UI Colors, Title Text, etc, to promote better engagement (Ky Garrett-Townsend)
 
 - [ ] Experiment w/ adding multiple variations of motivational quotes/positive affirmations (Ky Garrett-Townsend)
 
@@ -23,4 +23,4 @@
 
 - [ ] Work on a reminder system (Ky Garrett-Townsend)
 
-- [ ] Add color correlations for specific task types (Ky Garrett-Townsend)
+- [X] Add color correlations for specific task types (Ky Garrett-Townsend)
